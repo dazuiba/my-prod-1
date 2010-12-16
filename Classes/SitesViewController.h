@@ -11,7 +11,6 @@
 #import "GHSearch.h"
 #import "SiteCell.h"
 #import "GHSite.h"
-
 @interface SitesViewController : UIViewController <CLLocationManagerDelegate, UISearchBarDelegate> {
   @private
 	 UITableView *tableView;

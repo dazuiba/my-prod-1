@@ -8,15 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "SitesViewController.h"
-@class handhzViewController;
-
 @interface handhzAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
-    SitesViewController *viewController;
+	  SitesViewController *viewController;
+	  UINavigationController *navigationController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet SitesViewController *viewController;
+@property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
+
+-(void)hideMainViewNavigationBar:(BOOL) hidden;
 
 @end
 

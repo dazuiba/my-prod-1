@@ -7,7 +7,10 @@
 //
 
 #import "SitesViewController.h"
+#import "MapViewController.h"
 #import <CoreLocation/CoreLocation.h>
+#import "handhzAppDelegate.h"
+
 @implementation SitesViewController
 
 @synthesize tableView,toolBar,searchControl,loadingCell,noResultsCell;
@@ -16,7 +19,33 @@
 CLLocation *coords ;
 
 - (void)viewDidLoad {
+	[super viewDidLoad]; 
 	coords = [[CLLocation alloc] initWithLatitude:30.289874866666665 longitude: 120.11679036666668];
+	NSMutableArray *toolbarItems = [[NSMutableArray alloc] initWithCapacity:3];
+	[toolbarItems addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reticle.png"]  style:UIBarButtonItemStyleDone target:self action:@selector(currentLocationButtonClicked:)]];
+	[toolbarItems addObjectsFromArray:self.toolBar.items];
+	[self.toolBar setItems:toolbarItems animated:NO];
+	self.searchResult = [GHSearch searchWithURLFormat:kResourceSearchBikeSite];
+	[searchResult addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
+	[self.searchResult loadData];
+} 
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	id object = [self.searchResult.results objectAtIndex:indexPath.row];
+	UIViewController *viewController = [(MapViewController *)[MapViewController alloc] initWithSite:(GHSite *)object];
+	
+	viewController.hidesBottomBarWhenPushed = YES;
+	[[self navigationController] pushViewController:viewController animated:YES];
+	NSLog(@"navigationController: %@,%@", self.navigationController.topViewController,viewController);
+	handhzAppDelegate *appDelegate = (handhzAppDelegate *)[[UIApplication sharedApplication] delegate];
+	[appDelegate hideMainViewNavigationBar:NO];
+	[viewController release];
+}
+
+
+- (void) viewWillAppear:(BOOL)animated {
+	
 	searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(-5.0, 0.0, 320.0, 44.0)];
 	searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	UIView *searchBarView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 310.0, 44.0)];
@@ -24,17 +53,14 @@ CLLocation *coords ;
 	searchBar.delegate = self;
 	[searchBarView addSubview:searchBar];
 	self.navigationItem.titleView = searchBarView;
-	//self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showActions:)];
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showActions:)];
+	
+	handhzAppDelegate *appDelegate = (handhzAppDelegate *)[[UIApplication sharedApplication] delegate];
+	[appDelegate hideMainViewNavigationBar:YES];
+	
+	[super viewWillAppear:animated];
+}
 
-	NSMutableArray *toolbarItems = [[NSMutableArray alloc] initWithCapacity:3];
-	[toolbarItems addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reticle.png"]  style:UIBarButtonItemStyleDone target:self action:@selector(currentLocationButtonClicked:)]];
-	[toolbarItems addObjectsFromArray:self.toolBar.items];
-	[self.toolBar setItems:toolbarItems animated:NO];
-	[super viewDidLoad];
-	self.searchResult = [GHSearch searchWithURLFormat:kResourceSearchBikeSite];
-	[searchResult addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
-	[self.searchResult loadData];
-} 
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -100,12 +126,6 @@ CLLocation *coords ;
 	cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", site.position_name];
 	return cell;
 }
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-	
-}
-
 
 - (CLLocationManager *)locationManager {
 	

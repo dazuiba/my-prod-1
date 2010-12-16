@@ -8,6 +8,7 @@
 
 #import "handhzAppDelegate.h"
 #import "SitesViewController.h"
+#import "MapViewController.h"
 
 @implementation handhzAppDelegate
 
@@ -23,12 +24,29 @@
     // Override point for customization after application launch.
 
     // Add the view controller's view to the window and display.
-    [window addSubview:viewController.view];
+	
+//		UIViewController *v = [(MapViewController *)[MapViewController alloc] initWithSite:(GHSite *)object];
+   // [window addSubview:viewController.view];
+		[self hideMainViewNavigationBar:YES];
+  	[window addSubview:navigationController.view];
+
     [window makeKeyAndVisible];
 
     return YES;
 }
 
+
+- (void)hideMainViewNavigationBar:(BOOL) hidden{
+	if (hidden) {
+		if (![navigationController isNavigationBarHidden]){
+			[navigationController setNavigationBarHidden:YES animated:NO];
+		}
+	}else {
+		if ([navigationController isNavigationBarHidden]){
+			[navigationController setNavigationBarHidden:NO animated:NO];
+		}
+	}
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*
@@ -76,7 +94,6 @@
      Free up as much memory as possible by purging cached data objects that can be recreated (or reloaded from disk) later.
      */
 }
-
 
 - (void)dealloc {
     [viewController release];
