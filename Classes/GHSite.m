@@ -28,11 +28,9 @@
 }
 
 
-- (NSInteger *)number {
-	NSLog(@"#number: %@", [[self valueInDict:@"uid"] class]);
-	
-	NSLog(@"#position_name: %@", [self valueInDict:@"position_name"]);
-	return [self valueInDict:@"uid"];
+- (NSInteger *)number { 
+	NSLog(@"ss:%@",[[self valueInDict:@"lat"] class]);
+	return (NSInteger *)[self valueInDict:@"uid"];
 }
 
 
@@ -43,6 +41,27 @@
 - (NSString *)position_name {
 	return [self valueInDict:@"position_name"];
 }
+
+- (CLLocationCoordinate2D)coordinate;
+{
+	CLLocationCoordinate2D theCoordinate;
+	theCoordinate.latitude = [(NSDecimalNumber *)[self valueInDict:@"lat"] doubleValue];
+	theCoordinate.longitude =[(NSDecimalNumber *)[self valueInDict:@"lng"] doubleValue];
+	return theCoordinate; 
+}
+
+// required if you set the MKPinAnnotationView's "canShowCallout" property to YES
+- (NSString *)title
+{
+	return self.name;
+}
+
+// optional
+- (NSString *)subtitle
+{
+	return self.position_name;
+}
+
 
 	 
 - (id)valueInDict:(NSString *)key {

@@ -21,12 +21,29 @@
 }
 
 
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	self.navigationItem.title = @"Back";
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showActions:)];
+	self.navigationItem.title = @"Back"; 
+	[self gotoLocation];
+	[mapView addAnnotation:self.site];
 }
 
+
+- (void)gotoLocation
+{
+	// start off by default in San Francisco
+	MKCoordinateRegion newRegion;
+	newRegion.center.latitude = site.coordinate.latitude;
+	newRegion.center.longitude = site.coordinate.longitude;
+	newRegion.span.latitudeDelta = 0.012872;
+	newRegion.span.longitudeDelta = 0.009863;
+	[mapView setRegion:newRegion animated:YES];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation{
+	
+}
 - (void)dealloc {
 	[super dealloc];
 }

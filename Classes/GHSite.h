@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
 
-
-@interface GHSite : NSObject {
+@interface GHSite : NSObject <MKAnnotation> {
 	NSDictionary *dict;
 }
 

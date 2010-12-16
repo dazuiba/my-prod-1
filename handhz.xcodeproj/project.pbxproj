@@ -11,6 +11,8 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		2212B33B12B9F5C100CA6107 /* KMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2212B33A12B9F5C100CA6107 /* KMLParser.m */; };
+		2212B36012B9FA5E00CA6107 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2212B35F12B9FA5E00CA6107 /* MapKit.framework */; };
 		223D38F912B8D69100E53545 /* GHSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 223D38F812B8D69100E53545 /* GHSite.m */; };
 		223D392C12B8EE6200E53545 /* SiteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 223D392B12B8EE6200E53545 /* SiteCell.m */; };
 		223D39BA12B8F69300E53545 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 223D39AF12B8F69300E53545 /* NSObject+SBJSON.m */; };
@@ -51,6 +53,9 @@
 		1D3623250D0F684500981E51 /* handhzAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = handhzAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* handhz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = handhz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2212B33912B9F5C100CA6107 /* KMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMLParser.h; sourceTree = "<group>"; };
+		2212B33A12B9F5C100CA6107 /* KMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMLParser.m; sourceTree = "<group>"; };
+		2212B35F12B9FA5E00CA6107 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		223D38F712B8D69100E53545 /* GHSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHSite.h; sourceTree = "<group>"; };
 		223D38F812B8D69100E53545 /* GHSite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHSite.m; sourceTree = "<group>"; };
 		223D392A12B8EE6200E53545 /* SiteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteCell.h; sourceTree = "<group>"; };
@@ -128,6 +133,7 @@
 				22CE69C412B7D10300C92FC8 /* SystemConfiguration.framework in Frameworks */,
 				22CE69C812B7D11600C92FC8 /* MobileCoreServices.framework in Frameworks */,
 				22CE6AE412B7DC5300C92FC8 /* CFNetwork.framework in Frameworks */,
+				2212B36012B9FA5E00CA6107 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,6 +237,8 @@
 		22CE698412B7CE4000C92FC8 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				2212B33912B9F5C100CA6107 /* KMLParser.h */,
+				2212B33A12B9F5C100CA6107 /* KMLParser.m */,
 				223D39AC12B8F69300E53545 /* JSON */,
 				22CE697F12B7CE3200C92FC8 /* Reachability */,
 				22CE696812B7CE2400C92FC8 /* ASI */,
@@ -316,6 +324,7 @@
 				22CE69B912B7D0D000C92FC8 /* libz.1.2.3.dylib */,
 				22CE69C312B7D10300C92FC8 /* SystemConfiguration.framework */,
 				22CE6AE312B7DC5300C92FC8 /* CFNetwork.framework */,
+				2212B35F12B9FA5E00CA6107 /* MapKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -407,6 +416,7 @@
 				223D39BE12B8F69300E53545 /* SBJsonParser.m in Sources */,
 				223D39BF12B8F69300E53545 /* SBJsonWriter.m in Sources */,
 				22C44E8312B9D6950095B0C0 /* MapViewController.m in Sources */,
+				2212B33B12B9F5C100CA6107 /* KMLParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

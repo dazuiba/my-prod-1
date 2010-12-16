@@ -3,8 +3,9 @@
 #import "GHSite.h"
 
 
-@interface MapViewController : UIViewController <UIActionSheetDelegate> {
+@interface MapViewController : UIViewController <MKMapViewDelegate> {
 	GHSite *site;
+	IBOutlet MKMapView *mapView;
 }
 
 @property(nonatomic,retain) GHSite *site;
