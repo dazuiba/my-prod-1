@@ -43,7 +43,7 @@ typedef enum {
 
 + (id)resourceWithURL:(NSURL *)theURL;
 - (id)initWithURL:(NSURL *)theURL;
-- (void)loadData;
+
 - (void)saveValues:(NSDictionary *)theValues withURL:(NSURL *)theURL;
 
 @end

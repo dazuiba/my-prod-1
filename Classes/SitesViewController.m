@@ -13,9 +13,10 @@
 @synthesize tableView,toolBar,searchControl,loadingCell,noResultsCell;
 @synthesize searchResult;
 
+CLLocation *coords ;
 
-CLLocation *coords;
 - (void)viewDidLoad {
+	coords = [[CLLocation alloc] initWithLatitude:30.289874866666665 longitude: 120.11679036666668];
 	searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(-5.0, 0.0, 320.0, 44.0)];
 	searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
 	UIView *searchBarView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 310.0, 44.0)];
@@ -23,17 +24,16 @@ CLLocation *coords;
 	searchBar.delegate = self;
 	[searchBarView addSubview:searchBar];
 	self.navigationItem.titleView = searchBarView;
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showActions:)];
+	//self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showActions:)];
 
 	NSMutableArray *toolbarItems = [[NSMutableArray alloc] initWithCapacity:3];
-	NSLog(@"VI:%@",self.toolBar.items);
-	[toolbarItems addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reticle.png"]  style:UIBarButtonItemStyleDone target:self action:@selector(showActions:)]];
+	[toolbarItems addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reticle.png"]  style:UIBarButtonItemStyleDone target:self action:@selector(currentLocationButtonClicked:)]];
 	[toolbarItems addObjectsFromArray:self.toolBar.items];
 	[self.toolBar setItems:toolbarItems animated:NO];
 	[super viewDidLoad];
-	self.searchResult = [GHSearch searchWithURLFormat:kUserSearchFormat];
+	self.searchResult = [GHSearch searchWithURLFormat:kResourceSearchBikeSite];
 	[searchResult addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
-    [self.locationManager startUpdatingLocation];
+	[self.searchResult loadData];
 } 
 
 - (void)didReceiveMemoryWarning {
@@ -49,6 +49,10 @@ CLLocation *coords;
 	//[self quitSearching:nil];
 }
 
+- (void)currentLocationButtonClicked{
+	[self.locationManager startUpdatingLocation];
+}
+
 - (void)viewDidUnload {
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
@@ -56,6 +60,7 @@ CLLocation *coords;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
 	if ([keyPath isEqualToString:kResourceLoadingStatusKeyPath]) {
+		NSLog(@"observeValueForKeyPathSize:  %d",self.searchResult.results.count);
 		[self.tableView reloadData];
 		GHSearch *search = (GHSearch *)object;
 		if (!search.isLoading && search.error) {
@@ -71,16 +76,34 @@ CLLocation *coords;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section { 
-    if (self.searchResult.isLoading) return 1;
+		NSLog(@"numberOfRowsInSection:  %d",self.searchResult.results.count);
+	if (self.searchResult.isLoading) return 1;
 	if (self.searchResult.isLoaded && self.searchResult.results.count == 0) return 1;
 	return self.searchResult.results.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return loadingCell;
+	if(!self.searchResult.isLoaded) return loadingCell;
+	if(self.searchResult.results.count == 0) return noResultsCell;
+	
+	GHSite *site = [self.searchResult.results objectAtIndex:indexPath.row];
+	
+	static NSString *kCellIdentifier = @"SiteCellID";
+	UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
+	if (cell == nil) {
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+		cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
+	}
+	
+	cell.textLabel.text = [NSString stringWithFormat:@"#%@ %@", site.number, site.name];
+	cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", site.position_name];
+	return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	
 }
 
 
@@ -99,7 +122,6 @@ CLLocation *coords;
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation
 													 fromLocation:(CLLocation *)oldLocation {
-    
     coords = newLocation;
     NSLog(@"Location: %@", [newLocation description]);
 }
@@ -110,6 +132,8 @@ CLLocation *coords;
 
 
 - (void)dealloc {
+	[searchResult removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
+	[searchResult release];
 	[searchBar release];
 	[tableView release];
 	[searchControl release];

@@ -1,5 +1,5 @@
 #import "GHSearch.h"
-
+#import "GHSite.h"
 
 @implementation GHSearch
 
@@ -16,11 +16,16 @@
 	return self;
 }
 
+- (NSURL *)resourceURL {
+	NSURL *url = [NSURL URLWithString:urlFormat];
+	return url;
+}
+
 - (void)dealloc {
 	[searchTerm release], searchTerm = nil;
 	[urlFormat release], urlFormat = nil;
 	[results release], results = nil;
-    [super dealloc];
+	[super dealloc];
 }
 
 - (NSString *)description {
@@ -28,14 +33,18 @@
 }
   
 
-- (void)parsingFinished:(id)theResult {
-	if ([theResult isKindOfClass:[NSError class]]) {
-		self.error = theResult;
+- (void)parsingFinished:(NSArray *)dictArray {
+	if ([dictArray isKindOfClass:[NSError class]]) {
+		self.error = dictArray;
 		self.loadingStatus = GHResourceStatusNotLoaded;
+		
 	} else {
-		// Mark the results as not loaded, because the search doesn't contain all attributes
-		for (GHResource *res in theResult) res.loadingStatus = GHResourceStatusNotLoaded;
-		self.results = theResult;
+		self.results = [NSMutableArray arrayWithCapacity:dictArray.count];
+		for (NSDictionary *dict in dictArray){ 
+			GHSite *site = [[GHSite alloc] initWithDictionary:[dict objectForKey:@"byc_site"]];
+			[self.results addObject:site];
+			[site release];
+		}
 		self.loadingStatus = GHResourceStatusLoaded;
 	}
 }

@@ -6,7 +6,6 @@
 - (void)loadingFailed:(ASIHTTPRequest *)request;
 - (void)savingFinished:(ASIHTTPRequest *)request;
 - (void)savingFailed:(ASIHTTPRequest *)request;
-- (void)parseString:(NSString *)string;
 - (void)parsingFinished:(id)theResult;
 - (void)parseSaveData:(NSData *)data;
 - (void)parsingSaveFinished:(id)theResult;
@@ -74,18 +73,14 @@
 }
 
 - (void)loadingFinished:(ASIHTTPRequest *)request {
-	DJLog(@"Loading %@ finished: %@", [request url], [request responseString]);
-	[self performSelectorInBackground:@selector(parseData:) withObject:[request responseString]];
+	D2JLog(@"Loading %@ finished: %@", [request url], [request responseString]);
+	
+	[self performSelectorInBackground:@selector(parsingFinished:) withObject:[[[request responseString] JSONValue] objectForKey:@"result"]];
 }
 
 - (void)loadingFailed:(ASIHTTPRequest *)request {
 	DJLog(@"Loading %@ failed: %@", [request url], [request error]);
 	[self parsingFinished:[request error]];
-}
-
-- (void)parseString:(NSString *)data {
-	//[NSException raise:@"GHResourceAbstractMethodException" format:@"The subclass of GHResource must implement this method"];
-	[self performSelectorOnMainThread:@selector(parsingFinished:) withObject:[data JSONValue] waitUntilDone:YES];
 }
 
 - (void)parsingFinished:(id)theResult {
@@ -113,7 +108,7 @@
 
 - (void)savingFinished:(ASIHTTPRequest *)request {
 	DJLog(@"Saving %@ finished: %@", [request url], [request responseString]);
-	[self performSelectorInBackground:@selector(parseSaveData:) withObject:[request responseData]];
+	[self performSelectorInBackground:@selector(parseSaveData:) withObject:[[request responseString] JSONValue]];
 }
 
 - (void)savingFailed:(ASIHTTPRequest *)request {

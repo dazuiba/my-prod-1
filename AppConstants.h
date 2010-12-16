@@ -1,3 +1,11 @@
+#define kResourceSearchBikeSite @"http://localhost:3000/api/search"
+
+
+
+// tables
+#define kSiteCellIdentifier @"SiteCell"
+
+
 // Settings
 #define kClearAvatarCacheDefaultsKey @"clearAvatarCache"
 #define kLastReadingDateURLDefaultsKeyPrefix @"lastReadingDate:"

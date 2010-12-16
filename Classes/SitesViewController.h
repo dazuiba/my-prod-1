@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "GHSearch.h"
+#import "SiteCell.h"
+#import "GHSite.h"
 
 @interface SitesViewController : UIViewController <CLLocationManagerDelegate, UISearchBarDelegate> {
   @private

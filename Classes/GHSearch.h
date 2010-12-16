@@ -3,13 +3,13 @@
 
 
 @interface GHSearch : GHResource {
-	NSArray *results;
+	NSMutableArray *results;
   @private
 	NSString *urlFormat;
 	NSString *searchTerm;
 }
 
-@property(nonatomic,retain)NSArray *results;
+@property(nonatomic,retain)NSMutableArray *results;
 @property(nonatomic,retain)NSString *searchTerm;
 
 + (id)searchWithURLFormat:(NSString *)theFormat;
