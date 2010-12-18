@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SitesViewController.h"
+
+@class SitesViewController;
 @interface handhzAppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
 	  SitesViewController *viewController;

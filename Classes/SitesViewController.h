@@ -12,17 +12,22 @@
 #import "SiteCell.h"
 #import "GHSite.h"
 #import "OverlayController.h"
+#import "TableViewController.h"
+
+@class TableViewController;
+@class MapIndexViewController;
 @interface SitesViewController : UIViewController <CLLocationManagerDelegate, UISearchBarDelegate> {
   @private
-	 UITableView *tableView;
 	 UISearchBar *searchBar;
 	 IBOutlet UINavigationItem *navigationItem;
 	 IBOutlet UIToolbar *toolBar;
 	
 	 OverlayController *overlayController;
+	 TableViewController *tableViewController; 
+	 MapIndexViewController *mapIndexViewController;
+	
 	 UISegmentedControl *searchControl;
-	 UITableViewCell *loadingCell;
-	 UITableViewCell *noResultsCell;
+	
 	 CLLocation *coords;	
 	 CLLocationManager *locationManager;
 	 GHSearch *searchResult;
@@ -31,10 +36,12 @@
 
 @property (nonatomic, retain) GHSearch *searchResult;
 @property (nonatomic, retain) IBOutlet UISegmentedControl *searchControl;
-@property (nonatomic, retain) IBOutlet UITableView *tableView;
-@property (nonatomic, retain) IBOutlet UITableViewCell *loadingCell;
-@property (nonatomic, retain) IBOutlet UITableViewCell *noResultsCell;
-
+@property (nonatomic, retain) IBOutlet TableViewController *tableViewController;
+@property (nonatomic, retain) IBOutlet MapIndexViewController *mapIndexViewController;
 @property (nonatomic, retain) UIToolbar *toolBar;
 @property (nonatomic, retain, readonly) CLLocationManager *locationManager;
+
+- (IBAction)switchViews:(id)sender;
+
+
 @end

@@ -9,17 +9,17 @@
 #import "SitesViewController.h"
 #import "MapViewController.h"
 #import <CoreLocation/CoreLocation.h>
-#import "handhzAppDelegate.h"
 
 @interface SitesViewController() 
 - (void) addTopSearchBar;	
 - (void)quitSearching:(id)sender;
 - (void)currentLocationButtonClicked;
-
+- (void)showView:(UIViewController *)showView hideView:(UIViewController *)toHide;
 @end
+
 @implementation SitesViewController
 
-@synthesize tableView,toolBar,searchControl,loadingCell,noResultsCell;
+@synthesize toolBar,searchControl, tableViewController,mapIndexViewController;
 @synthesize searchResult;
 
 CLLocation *coords ;
@@ -37,23 +37,14 @@ CLLocation *coords ;
 	overlayController.view.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
 
 	[self.toolBar setItems:toolbarItems animated:NO];
+	
 	self.searchResult = [GHSearch searchWithURLFormat:kResourceSearchBikeSite];
-	[searchResult addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
-	[self.searchResult loadData];
+	
+	self.tableViewController.searchResult = searchResult;
+	[self.view insertSubview:self.tableViewController.view atIndex:0];
+	
+	
 } 
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-	id object = [self.searchResult.results objectAtIndex:indexPath.row];
-	UIViewController *viewController = [(MapViewController *)[MapViewController alloc] initWithSite:(GHSite *)object];
-	
-	viewController.hidesBottomBarWhenPushed = YES;
-	[[self navigationController] pushViewController:viewController animated:YES];	
-	handhzAppDelegate *appDelegate = (handhzAppDelegate *)[[UIApplication sharedApplication] delegate];
-	[appDelegate hideMainViewNavigationBar:NO];
-	[viewController release];
-}
-
 
 - (void) viewWillAppear:(BOOL)animated {
 	
@@ -75,6 +66,33 @@ CLLocation *coords ;
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(se:)] autorelease];
 }
 
+- (IBAction)switchViews:(id)sender{
+	[UIView beginAnimations:@"View Flip" context:nil];
+	[UIView setAnimationDuration:0.43];
+	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+	
+	if(self.tableViewController.view.superview == nil){
+		[self showView:self.tableViewController hideView:self.mapIndexViewController];
+ 	}else{		
+		[self showView:self.mapIndexViewController hideView:self.tableViewController];
+	}
+}
+
+- (void)showView:(UIViewController *)showView hideView:(UIViewController *)toHide{
+	
+	[UIView setAnimationTransition:
+	 UIViewAnimationTransitionFlipFromRight
+												 forView:self.view cache:YES];
+	
+	[showView viewWillAppear:YES];
+	[toHide viewWillDisappear:YES];
+	[toHide.view removeFromSuperview];
+	[self.view insertSubview:showView.view atIndex:0];
+	[toHide viewDidDisappear:YES];
+	[showView viewDidAppear:YES];
+	[UIView commitAnimations];
+}
+
 
 - (void)didReceiveMemoryWarning {
    [super didReceiveMemoryWarning];
@@ -87,8 +105,12 @@ CLLocation *coords ;
 	[self quitSearching:nil];
 }
 
+
+
+
+
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)theSearchBar {
-	[self.tableView insertSubview:overlayController.view aboveSubview:self.parentViewController.view];
+	[self.view insertSubview:overlayController.view aboveSubview:self.parentViewController.view];
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(quitSearching:)] autorelease];
 }
 
@@ -108,49 +130,6 @@ CLLocation *coords ;
 	// e.g. self.myOutlet = nil;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	if ([keyPath isEqualToString:kResourceLoadingStatusKeyPath]) {
-		NSLog(@"observeValueForKeyPathSize:  %d",self.searchResult.results.count);
-		[self.tableView reloadData];
-		GHSearch *search = (GHSearch *)object;
-		if (!search.isLoading && search.error) {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Loading error" message:@"Could not load the search results" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-			[alert show];
-			[alert release];
-		}
-	}
-}
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section { 
-		NSLog(@"numberOfRowsInSection:  %d",self.searchResult.results.count);
-	if (self.searchResult.isLoading) return 1;
-	if (self.searchResult.isLoaded && self.searchResult.results.count == 0) return 1;
-	return self.searchResult.results.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	
-	if(!self.searchResult.isLoaded) return loadingCell;
-	if(self.searchResult.results.count == 0) return noResultsCell;
-	
-	GHSite *site = [self.searchResult.results objectAtIndex:indexPath.row];
-	
-	static NSString *kCellIdentifier = @"SiteCellID";
-	UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
-	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-		cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
-	}
-	
-	cell.textLabel.text = [NSString stringWithFormat:@"#%@ %@", site.number, site.name];
-	cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", site.position_name];
-	return cell;
-}
 
 - (CLLocationManager *)locationManager {
 	
@@ -180,10 +159,8 @@ CLLocation *coords ;
 	[searchResult removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
 	[searchResult release];
 	[searchBar release];
-	[tableView release];
+	[self.tableViewController release];
 	[searchControl release];
-	[loadingCell release];
-	[noResultsCell release];
     [super dealloc];
 }
 

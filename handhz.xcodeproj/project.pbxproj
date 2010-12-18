@@ -27,6 +27,8 @@
 		223D3A5112B8FEE000E53545 /* have-location.png in Resources */ = {isa = PBXBuildFile; fileRef = 223D3A4F12B8FEE000E53545 /* have-location.png */; };
 		2270936612BC840200475720 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2270936512BC840200475720 /* TableViewController.m */; };
 		2270936812BC848A00475720 /* TableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2270936712BC848A00475720 /* TableView.xib */; };
+		2270940E12BC903A00475720 /* MapIndexViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2270940D12BC903A00475720 /* MapIndexViewController.m */; };
+		2270941012BC906E00475720 /* MapIndexView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2270940F12BC906E00475720 /* MapIndexView.xib */; };
 		22C44E8312B9D6950095B0C0 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C44E8212B9D6950095B0C0 /* MapViewController.m */; };
 		22C44E8512B9D6A60095B0C0 /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22C44E8412B9D6A60095B0C0 /* MapView.xib */; };
 		22CE697912B7CE2400C92FC8 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CE696A12B7CE2400C92FC8 /* ASIAuthenticationDialog.m */; };
@@ -85,6 +87,9 @@
 		2270936412BC840200475720 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		2270936512BC840200475720 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		2270936712BC848A00475720 /* TableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableView.xib; sourceTree = "<group>"; };
+		2270940C12BC903A00475720 /* MapIndexViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapIndexViewController.h; sourceTree = "<group>"; };
+		2270940D12BC903A00475720 /* MapIndexViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapIndexViewController.m; sourceTree = "<group>"; };
+		2270940F12BC906E00475720 /* MapIndexView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapIndexView.xib; sourceTree = "<group>"; };
 		22C44E8112B9D6950095B0C0 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		22C44E8212B9D6950095B0C0 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		22C44E8412B9D6A60095B0C0 /* MapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapView.xib; sourceTree = "<group>"; };
@@ -210,6 +215,7 @@
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				22C44E8412B9D6A60095B0C0 /* MapView.xib */,
 				2270936712BC848A00475720 /* TableView.xib */,
+				2270940F12BC906E00475720 /* MapIndexView.xib */,
 			);
 			name = IBFiles;
 			sourceTree = "<group>";
@@ -282,6 +288,8 @@
 				22C44E8212B9D6950095B0C0 /* MapViewController.m */,
 				2270936412BC840200475720 /* TableViewController.h */,
 				2270936512BC840200475720 /* TableViewController.m */,
+				2270940C12BC903A00475720 /* MapIndexViewController.h */,
+				2270940D12BC903A00475720 /* MapIndexViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -402,6 +410,7 @@
 				22C44E8512B9D6A60095B0C0 /* MapView.xib in Resources */,
 				2212B3C412BA301000CA6107 /* Overlay.xib in Resources */,
 				2270936812BC848A00475720 /* TableView.xib in Resources */,
+				2270941012BC906E00475720 /* MapIndexView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +446,7 @@
 				2212B33B12B9F5C100CA6107 /* KMLParser.m in Sources */,
 				2212B3C212BA2FFA00CA6107 /* OverlayController.m in Sources */,
 				2270936612BC840200475720 /* TableViewController.m in Sources */,
+				2270940E12BC903A00475720 /* MapIndexViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
