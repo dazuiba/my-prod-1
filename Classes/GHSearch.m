@@ -3,8 +3,7 @@
 
 @implementation GHSearch
 
-@synthesize results;
-@synthesize searchTerm;
+@synthesize searchTerm,location,results;
 
 + (id)searchWithURLFormat:(NSString *)theFormat{
 	return [[[[self class] alloc] initWithURLFormat:theFormat] autorelease];
@@ -17,7 +16,18 @@
 }
 
 - (NSURL *)resourceURL {
-	NSURL *url = [NSURL URLWithString:urlFormat];
+	NSString *key = @"";
+	NSString *ll = @"";	
+	
+	if (searchTerm) {
+		key = [searchTerm stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];	
+	}
+	
+	if (location.center.latitude) {
+		ll = [NSString stringWithFormat:@"%f,%f&span=%f,%f",location.center.latitude,location.center.longitude,location.span.latitudeDelta,location.span.longitudeDelta];
+	}
+	NSString *urlString = [NSString stringWithFormat:urlFormat, key,ll];
+	NSURL *url = [NSURL URLWithString:urlString];
 	return url;
 }
 

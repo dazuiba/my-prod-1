@@ -42,8 +42,7 @@
 	return [self valueInDict:@"position_name"];
 }
 
-- (CLLocationCoordinate2D)coordinate;
-{
+- (CLLocationCoordinate2D)coordinate;{
 	CLLocationCoordinate2D theCoordinate;
 	theCoordinate.latitude = self.lat;
 	theCoordinate.longitude = self.lng;

@@ -8,7 +8,7 @@
 
 #import "handHz.h"
 #import "AppConstants.h"
-
+#import <MapKit/MapKit.h>
 @implementation handHz
 + (ASINetworkQueue *)queue {
 	static ASINetworkQueue *queue;
@@ -20,13 +20,17 @@
 }
 
 + (MKCoordinateRegion)region{
-	return [self region:kMapInitLat withLng:kMapInitLng];
+	static CLLocationCoordinate2D MapInitCord; 
+	if(!MapInitCord.latitude){
+		MapInitCord.latitude =  kMapInitLat;
+		MapInitCord.longitude = kMapInitLng;
+	}
+	return [self region:MapInitCord];
 }
 
-+ (MKCoordinateRegion)region:(double)lat withLng:(double)lng{
++ (MKCoordinateRegion)region:(CLLocationCoordinate2D)cord{
 	MKCoordinateRegion newRegion;
-	newRegion.center.latitude = lat;
-	newRegion.center.longitude = lng;
+	newRegion.center = cord;
 	newRegion.span.latitudeDelta = kMapInitSpanDeltaLat;
 	newRegion.span.longitudeDelta = kMapInitSpanDeltaLng;
 	return newRegion;

@@ -43,20 +43,25 @@ CLLocation *coords ;
 	
 	[self.searchResult addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
 	self.mapIndexViewController.searchResult = searchResult;
-	[self.searchResult loadData];
+//	[self.searchResult loadData];
 	[self.view insertSubview:self.mapIndexViewController.view atIndex:0];
 } 
 
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	if ([keyPath isEqualToString:kResourceLoadingStatusKeyPath]) {
-		[self.mapIndexViewController update];
+	if ([keyPath isEqualToString:kResourceLoadingStatusKeyPath]) {	
 		GHSearch *search = (GHSearch *)object;
 		if (!search.isLoading && search.error) {
 			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Loading error" message:@"Could not load the search results" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 			[alert show];
 			[alert release];
+		}else {
+			NSLog(@"observ: %@",search.results);
+			if(search.results && [search.results count] > 0){
+				[self.mapIndexViewController update];
+			}
 		}
+
 	}
 }
  

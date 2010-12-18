@@ -34,7 +34,7 @@
 
 
 - (void)gotoLocation { 
-	[mapView setRegion:[handHz region:site.coordinate.latitude withLng: site.coordinate.longitude] animated:YES];
+	[mapView setRegion:[handHz region: site.coordinate] animated:YES];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation{

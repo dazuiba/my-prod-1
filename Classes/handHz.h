@@ -15,6 +15,5 @@
 }
 + (ASINetworkQueue *)queue;
 + (MKCoordinateRegion)region;
-+ (MKCoordinateRegion)region:(double)lat withLng:(double)lng;
-
++ (MKCoordinateRegion)region:(CLLocationCoordinate2D)cord;
 @end
