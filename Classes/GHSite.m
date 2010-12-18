@@ -29,7 +29,6 @@
 
 
 - (NSInteger *)number { 
-	NSLog(@"ss:%@",[[self valueInDict:@"lat"] class]);
 	return (NSInteger *)[self valueInDict:@"uid"];
 }
 
@@ -49,6 +48,10 @@
 	return theCoordinate; 
 }
 
+
+- (double)uid{
+	return [(NSDecimalNumber *)[self valueInDict:@"lat"] doubleValue];
+}
 
 - (double)lat{
 	return [(NSDecimalNumber *)[self valueInDict:@"lat"] doubleValue];
@@ -72,6 +75,16 @@
 	 
 - (id)valueInDict:(NSString *)key {
 	return [self.dict valueForKey:key];
+}
+
+- (BOOL)isEqual:(id)other {
+	if (other == self)
+		return YES;
+	if (!other || ![other isKindOfClass:[self class]])
+		return NO;
+	
+	GHSite *otherSite = (GHSite *)other;
+	return (self.number == otherSite.number);
 }
 
 - (void)dealloc {

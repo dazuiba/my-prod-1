@@ -10,11 +10,13 @@
 #import "GHSearch.h"
 #import "GHSite.h"
 #import "handHz.h"
+@class MKAnnotation;
 
 @interface MapIndexViewController : UIViewController <MKMapViewDelegate> {
 	
 	IBOutlet MKMapView *mapView;
 	GHSearch *searchResult;
+	NSArray *lastResult;
 }
 @property (nonatomic, retain) GHSearch *searchResult;
 

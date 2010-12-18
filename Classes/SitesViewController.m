@@ -56,8 +56,7 @@ CLLocation *coords ;
 			[alert show];
 			[alert release];
 		}else {
-			NSLog(@"observ: %@",search.results);
-			if(search.results && [search.results count] > 0){
+			if(!search.isLoading && search.results && [search.results count] > 0){
 				[self.mapIndexViewController update];
 			}
 		}
@@ -67,17 +66,17 @@ CLLocation *coords ;
  
 - (IBAction)switchViews:(id)sender{
 	[UIView beginAnimations:@"View Flip" context:nil];
-	[UIView setAnimationDuration:0.43];
+	[UIView setAnimationDuration:kFlipDuration];
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 	
 	if(self.tableViewController.view.superview == nil){
 		self.tableViewController.searchResult = searchResult;
-		[self switchViews:self.tableViewController hideView:self.mapIndexViewController];		
+		[self switchViews:self.tableViewController hideView:self.mapIndexViewController];
+		[self.tableViewController.tableView reloadData];
  	}else{
 		self.mapIndexViewController.searchResult = searchResult;		
-		NSLog(@"mapIndexViewController: %@",self.mapIndexViewController);
-		NSLog(@"mapIndexViewController.view: %@",self.mapIndexViewController.view);
 		[self switchViews:self.mapIndexViewController hideView:self.tableViewController];
+		
 	}
 
 }
@@ -91,8 +90,6 @@ CLLocation *coords ;
 	[toShow viewWillAppear:YES];
 	[toHide viewWillDisappear:YES];
 	[toHide.view removeFromSuperview];
-	NSLog(@"switchViews: %@",toShow);
-	NSLog(@"switchViews.view: %@",toShow.view);
 	[self.view insertSubview:toShow.view atIndex:0];
 	[toHide viewDidDisappear:YES];
 	[toShow viewDidAppear:YES];

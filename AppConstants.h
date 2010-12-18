@@ -1,6 +1,6 @@
 //#define kResourceSearchBikeSite @"http://handhz.com/api/search"
 #define kResourceSearchBikeSite @"http://localhost:3000/api/search?key=%@&&ll=%@"
-
+#define kFlipDuration 0.43
 #define kMapInitLat  30.289874866666665
 #define kMapInitLng  120.11679036666668
 
