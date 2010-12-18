@@ -11,13 +11,15 @@
 #import "GHSearch.h"
 #import "SiteCell.h"
 #import "GHSite.h"
+#import "OverlayController.h"
 @interface SitesViewController : UIViewController <CLLocationManagerDelegate, UISearchBarDelegate> {
   @private
 	 UITableView *tableView;
 	 UISearchBar *searchBar;
 	 IBOutlet UINavigationItem *navigationItem;
 	 IBOutlet UIToolbar *toolBar;
-
+	
+	 OverlayController *overlayController;
 	 UISegmentedControl *searchControl;
 	 UITableViewCell *loadingCell;
 	 UITableViewCell *noResultsCell;

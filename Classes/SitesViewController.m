@@ -11,6 +11,12 @@
 #import <CoreLocation/CoreLocation.h>
 #import "handhzAppDelegate.h"
 
+@interface SitesViewController() 
+- (void) addTopSearchBar;	
+- (void)quitSearching:(id)sender;
+- (void)currentLocationButtonClicked;
+
+@end
 @implementation SitesViewController
 
 @synthesize tableView,toolBar,searchControl,loadingCell,noResultsCell;
@@ -20,10 +26,16 @@ CLLocation *coords ;
 
 - (void)viewDidLoad {
 	[super viewDidLoad]; 
-	coords = [[CLLocation alloc] initWithLatitude:30.289874866666665 longitude: 120.11679036666668];
+	self.title = @"主界面";
+	coords = [[CLLocation alloc] initWithLatitude:kMapInitLat longitude: KMapInitLng];
 	NSMutableArray *toolbarItems = [[NSMutableArray alloc] initWithCapacity:3];
-	[toolbarItems addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reticle.png"]  style:UIBarButtonItemStyleDone target:self action:@selector(currentLocationButtonClicked:)]];
+	[toolbarItems addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reticle.png"]  style:UIBarButtonItemStyleDone target:self action:@selector(currentLocationButtonClicked)]];
 	[toolbarItems addObjectsFromArray:self.toolBar.items];
+	
+	
+	overlayController = [[OverlayController alloc] initWithTarget:self andSelector:@selector(quitSearching:)];
+	overlayController.view.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
+
 	[self.toolBar setItems:toolbarItems animated:NO];
 	self.searchResult = [GHSearch searchWithURLFormat:kResourceSearchBikeSite];
 	[searchResult addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
@@ -36,8 +48,7 @@ CLLocation *coords ;
 	UIViewController *viewController = [(MapViewController *)[MapViewController alloc] initWithSite:(GHSite *)object];
 	
 	viewController.hidesBottomBarWhenPushed = YES;
-	[[self navigationController] pushViewController:viewController animated:YES];
-	NSLog(@"navigationController: %@,%@", self.navigationController.topViewController,viewController);
+	[[self navigationController] pushViewController:viewController animated:YES];	
 	handhzAppDelegate *appDelegate = (handhzAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate hideMainViewNavigationBar:NO];
 	[viewController release];
@@ -46,33 +57,46 @@ CLLocation *coords ;
 
 - (void) viewWillAppear:(BOOL)animated {
 	
-	searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(-5.0, 0.0, 320.0, 44.0)];
-	searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-	UIView *searchBarView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 310.0, 44.0)];
-	searchBarView.autoresizingMask = 0;
-	searchBar.delegate = self;
-	[searchBarView addSubview:searchBar];
-	self.navigationItem.titleView = searchBarView;
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(showActions:)];
-	
+	[self addTopSearchBar];
 	handhzAppDelegate *appDelegate = (handhzAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate hideMainViewNavigationBar:YES];
 	
 	[super viewWillAppear:animated];
 }
 
+- (void) addTopSearchBar{
+	searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(-5.0, 0.0, 300.0, 44.0)];
+	searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+	UIView *searchBarView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 300.0, 44.0)];
+	searchBarView.autoresizingMask = 0;
+	searchBar.delegate = self;
+	[searchBarView addSubview:searchBar];
+	self.navigationItem.titleView = searchBarView;
+	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(se:)] autorelease];
+}
+
 
 - (void)didReceiveMemoryWarning {
-	// Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-	
-	// Release any cached data, images, etc that aren't in use.
+   [super didReceiveMemoryWarning];
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)theSearchBar {
+	NSLog(@"Search: %@", searchBar.text);
 	self.searchResult.searchTerm = searchBar.text;
 	[self.searchResult loadData];
-	//[self quitSearching:nil];
+	[self quitSearching:nil];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)theSearchBar {
+	[self.tableView insertSubview:overlayController.view aboveSubview:self.parentViewController.view];
+	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(quitSearching:)] autorelease];
+}
+
+- (void)quitSearching:(id)sender {
+	searchBar.text = self.searchResult.searchTerm;
+	[searchBar resignFirstResponder];
+	self.navigationItem.rightBarButtonItem = nil;
+	[overlayController.view removeFromSuperview];
 }
 
 - (void)currentLocationButtonClicked{
@@ -109,6 +133,7 @@ CLLocation *coords ;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	
 	if(!self.searchResult.isLoaded) return loadingCell;
 	if(self.searchResult.results.count == 0) return noResultsCell;
 	
