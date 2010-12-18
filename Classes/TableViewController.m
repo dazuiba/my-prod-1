@@ -15,8 +15,6 @@
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-	[self.searchResult addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
-	[self.searchResult loadData];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -62,18 +60,5 @@
 	[appDelegate hideMainViewNavigationBar:NO];
 	[viewController release];
 } 
-
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-	if ([keyPath isEqualToString:kResourceLoadingStatusKeyPath]) {
-		[self.tableView reloadData];
-		GHSearch *search = (GHSearch *)object;
-		if (!search.isLoading && search.error) {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Loading error" message:@"Could not load the search results" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-			[alert show];
-			[alert release];
-		}
-	}
-}
 
 @end

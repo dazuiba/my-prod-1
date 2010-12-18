@@ -18,6 +18,8 @@
 @property(nonatomic)NSInteger *number;
 @property(nonatomic,retain)NSString *name;
 @property(nonatomic,retain)NSString *position_name;
+@property(nonatomic,readonly)double lat;
+@property(nonatomic,readonly)double lng;
 
 + (id)initWithDictionary:(NSDictionary *)dict;
 - (BOOL)haveLocation;

@@ -7,14 +7,15 @@
 //
 
 #import "SitesViewController.h"
-#import "MapViewController.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface SitesViewController() 
 - (void) addTopSearchBar;	
 - (void)quitSearching:(id)sender;
 - (void)currentLocationButtonClicked;
-- (void)showView:(UIViewController *)showView hideView:(UIViewController *)toHide;
+- (UIViewController *)currentViewController;
+
+- (void)switchViews:(UIViewController *)switchViews hideView:(UIViewController *)toHide;
 @end
 
 @implementation SitesViewController
@@ -27,11 +28,11 @@ CLLocation *coords ;
 - (void)viewDidLoad {
 	[super viewDidLoad]; 
 	self.title = @"主界面";
-	coords = [[CLLocation alloc] initWithLatitude:kMapInitLat longitude: KMapInitLng];
+	coords = [[CLLocation alloc] initWithLatitude:kMapInitLat longitude: kMapInitLng];
 	NSMutableArray *toolbarItems = [[NSMutableArray alloc] initWithCapacity:3];
 	[toolbarItems addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reticle.png"]  style:UIBarButtonItemStyleDone target:self action:@selector(currentLocationButtonClicked)]];
 	[toolbarItems addObjectsFromArray:self.toolBar.items];
-	
+	[self addTopSearchBar];
 	
 	overlayController = [[OverlayController alloc] initWithTarget:self andSelector:@selector(quitSearching:)];
 	overlayController.view.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
@@ -40,20 +41,68 @@ CLLocation *coords ;
 	
 	self.searchResult = [GHSearch searchWithURLFormat:kResourceSearchBikeSite];
 	
-	self.tableViewController.searchResult = searchResult;
-	[self.view insertSubview:self.tableViewController.view atIndex:0];
-	
-	
+	[self.searchResult addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
+	self.mapIndexViewController.searchResult = searchResult;
+	[self.searchResult loadData];
+	[self.view insertSubview:self.mapIndexViewController.view atIndex:0];
 } 
 
-- (void) viewWillAppear:(BOOL)animated {
-	
-	[self addTopSearchBar];
-	handhzAppDelegate *appDelegate = (handhzAppDelegate *)[[UIApplication sharedApplication] delegate];
-	[appDelegate hideMainViewNavigationBar:YES];
-	
-	[super viewWillAppear:animated];
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+	if ([keyPath isEqualToString:kResourceLoadingStatusKeyPath]) {
+		[self.mapIndexViewController update];
+		GHSearch *search = (GHSearch *)object;
+		if (!search.isLoading && search.error) {
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Loading error" message:@"Could not load the search results" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			[alert show];
+			[alert release];
+		}
+	}
 }
+ 
+- (IBAction)switchViews:(id)sender{
+	[UIView beginAnimations:@"View Flip" context:nil];
+	[UIView setAnimationDuration:0.43];
+	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+	
+	if(self.tableViewController.view.superview == nil){
+		self.tableViewController.searchResult = searchResult;
+		[self switchViews:self.tableViewController hideView:self.mapIndexViewController];		
+ 	}else{
+		self.mapIndexViewController.searchResult = searchResult;		
+		NSLog(@"mapIndexViewController: %@",self.mapIndexViewController);
+		NSLog(@"mapIndexViewController.view: %@",self.mapIndexViewController.view);
+		[self switchViews:self.mapIndexViewController hideView:self.tableViewController];
+	}
+
+}
+
+- (void)switchViews:(UIViewController *)toShow hideView:(UIViewController *)toHide{
+	
+	[UIView setAnimationTransition:
+	 UIViewAnimationTransitionFlipFromRight
+												 forView:self.view cache:YES];
+	
+	[toShow viewWillAppear:YES];
+	[toHide viewWillDisappear:YES];
+	[toHide.view removeFromSuperview];
+	NSLog(@"switchViews: %@",toShow);
+	NSLog(@"switchViews.view: %@",toShow.view);
+	[self.view insertSubview:toShow.view atIndex:0];
+	[toHide viewDidDisappear:YES];
+	[toShow viewDidAppear:YES];
+	[UIView commitAnimations];
+}
+
+//
+//- (void) viewWillAppear:(BOOL)animated {
+//	
+//	[self addTopSearchBar];
+//	handhzAppDelegate *appDelegate = (handhzAppDelegate *)[[UIApplication sharedApplication] delegate];
+//	[appDelegate hideMainViewNavigationBar:YES];
+//	
+//	[super viewWillAppear:animated];
+//}
 
 - (void) addTopSearchBar{
 	searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(-5.0, 0.0, 300.0, 44.0)];
@@ -65,34 +114,6 @@ CLLocation *coords ;
 	self.navigationItem.titleView = searchBarView;
 	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(se:)] autorelease];
 }
-
-- (IBAction)switchViews:(id)sender{
-	[UIView beginAnimations:@"View Flip" context:nil];
-	[UIView setAnimationDuration:0.43];
-	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-	
-	if(self.tableViewController.view.superview == nil){
-		[self showView:self.tableViewController hideView:self.mapIndexViewController];
- 	}else{		
-		[self showView:self.mapIndexViewController hideView:self.tableViewController];
-	}
-}
-
-- (void)showView:(UIViewController *)showView hideView:(UIViewController *)toHide{
-	
-	[UIView setAnimationTransition:
-	 UIViewAnimationTransitionFlipFromRight
-												 forView:self.view cache:YES];
-	
-	[showView viewWillAppear:YES];
-	[toHide viewWillDisappear:YES];
-	[toHide.view removeFromSuperview];
-	[self.view insertSubview:showView.view atIndex:0];
-	[toHide viewDidDisappear:YES];
-	[showView viewDidAppear:YES];
-	[UIView commitAnimations];
-}
-
 
 - (void)didReceiveMemoryWarning {
    [super didReceiveMemoryWarning];

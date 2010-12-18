@@ -7,7 +7,7 @@
 //
 
 #import "handHz.h"
-
+#import "AppConstants.h"
 
 @implementation handHz
 + (ASINetworkQueue *)queue {
@@ -18,4 +18,18 @@
 	}
 	return queue;
 }
+
++ (MKCoordinateRegion)region{
+	return [self region:kMapInitLat withLng:kMapInitLng];
+}
+
++ (MKCoordinateRegion)region:(double)lat withLng:(double)lng{
+	MKCoordinateRegion newRegion;
+	newRegion.center.latitude = lat;
+	newRegion.center.longitude = lng;
+	newRegion.span.latitudeDelta = kMapInitSpanDeltaLat;
+	newRegion.span.longitudeDelta = kMapInitSpanDeltaLng;
+	return newRegion;
+}
+
 @end

@@ -9,9 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "SynthesizeSingleton.h"
 #import "ASINetworkQueue.h"
-
+#import <MapKit/MapKit.h>
 @interface handHz : NSObject {
 	
 }
 + (ASINetworkQueue *)queue;
++ (MKCoordinateRegion)region;
++ (MKCoordinateRegion)region:(double)lat withLng:(double)lng;
+
 @end

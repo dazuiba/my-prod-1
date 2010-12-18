@@ -13,6 +13,7 @@
 #import "GHSite.h"
 #import "OverlayController.h"
 #import "TableViewController.h"
+#import "MapIndexViewController.h"
 
 @class TableViewController;
 @class MapIndexViewController;

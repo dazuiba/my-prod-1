@@ -45,20 +45,27 @@
 - (CLLocationCoordinate2D)coordinate;
 {
 	CLLocationCoordinate2D theCoordinate;
-	theCoordinate.latitude = [(NSDecimalNumber *)[self valueInDict:@"lat"] doubleValue];
-	theCoordinate.longitude =[(NSDecimalNumber *)[self valueInDict:@"lng"] doubleValue];
+	theCoordinate.latitude = self.lat;
+	theCoordinate.longitude = self.lng;
 	return theCoordinate; 
 }
 
+
+- (double)lat{
+	return [(NSDecimalNumber *)[self valueInDict:@"lat"] doubleValue];
+}
+
+- (double)lng{
+	return [(NSDecimalNumber *)[self valueInDict:@"lng"] doubleValue];
+}
+
 // required if you set the MKPinAnnotationView's "canShowCallout" property to YES
-- (NSString *)title
-{
+- (NSString *)title{
 	return self.name;
 }
 
 // optional
-- (NSString *)subtitle
-{
+- (NSString *)subtitle{
 	return self.position_name;
 }
 

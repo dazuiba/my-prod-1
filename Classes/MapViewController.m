@@ -8,7 +8,7 @@
 
 #import "MapViewController.h"
 #import "GHSite.h"
-
+#import "handHz.h"
 #import "AppConstants.h"
 @interface MapViewController()
 - (void)gotoLocation;
@@ -33,14 +33,8 @@
 }
 
 
-- (void)gotoLocation {
-	// start off by default in San Francisco
-	MKCoordinateRegion newRegion;
-	newRegion.center.latitude = site.coordinate.latitude;
-	newRegion.center.longitude = site.coordinate.longitude;
-	newRegion.span.latitudeDelta = kMapInitSpanDeltaLat;
-	newRegion.span.longitudeDelta = kMapInitSpanDeltaLng;
-	[mapView setRegion:newRegion animated:YES];
+- (void)gotoLocation { 
+	[mapView setRegion:[handHz region:site.coordinate.latitude withLng: site.coordinate.longitude] animated:YES];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation{

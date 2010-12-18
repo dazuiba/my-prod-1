@@ -2,7 +2,7 @@
 #define kResourceSearchBikeSite @"http://localhost:3000/api/search"
 
 #define kMapInitLat  30.289874866666665
-#define KMapInitLng  120.11679036666668
+#define kMapInitLng  120.11679036666668
 
 #define	kMapInitSpanDeltaLat  0.012872
 #define	kMapInitSpanDeltaLng  0.009863
