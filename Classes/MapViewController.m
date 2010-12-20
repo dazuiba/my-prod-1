@@ -41,6 +41,7 @@
 	
 }
 - (void)dealloc {
+	[site release];
 	[super dealloc];
 }
 

@@ -16,7 +16,6 @@
 	
 	IBOutlet MKMapView *mapView;
 	GHSearch *searchResult;
-	NSArray *lastResult;
 }
 @property (nonatomic, retain) GHSearch *searchResult;
 

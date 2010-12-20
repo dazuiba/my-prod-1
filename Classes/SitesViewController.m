@@ -45,10 +45,14 @@ CLLocation *coords ;
 	self.mapIndexViewController.searchResult = searchResult;
 //	[self.searchResult loadData];
 	[self.view insertSubview:self.mapIndexViewController.view atIndex:0];
+	[toolbarItems release];
 } 
 
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+	
+	
+	
 	if ([keyPath isEqualToString:kResourceLoadingStatusKeyPath]) {	
 		GHSearch *search = (GHSearch *)object;
 		if (!search.isLoading && search.error) {
@@ -60,8 +64,9 @@ CLLocation *coords ;
 				[self.mapIndexViewController update];
 			}
 		}
-
 	}
+	
+	
 }
  
 - (IBAction)switchViews:(id)sender{
@@ -182,6 +187,7 @@ CLLocation *coords ;
 	[searchResult removeObserver:self forKeyPath:kResourceLoadingStatusKeyPath];
 	[searchResult release];
 	[searchBar release];
+	[coords release];
 	[self.tableViewController release];
 	[searchControl release];
     [super dealloc];

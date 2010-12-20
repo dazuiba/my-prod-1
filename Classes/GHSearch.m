@@ -44,19 +44,26 @@
   
 
 - (void)parsingFinished:(NSArray *)dictArray {
+	
+		
 	if ([dictArray isKindOfClass:[NSError class]]) {
-		self.error = dictArray;
+		self.error = (NSError *)dictArray;
 		self.loadingStatus = GHResourceStatusNotLoaded;
 		
 	} else {
-		self.results = [NSMutableArray arrayWithCapacity:dictArray.count];
+		
+		self.results = [[NSMutableArray alloc] initWithCapacity:dictArray.count];
 		for (NSDictionary *dict in dictArray){ 
 			GHSite *site = [[GHSite alloc] initWithDictionary:[dict objectForKey:@"byc_site"]];
 			[self.results addObject:site];
 			[site release];
 		}
+		
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 		self.loadingStatus = GHResourceStatusLoaded;
+		[pool release];
 	}
+	
 }
 
 @end

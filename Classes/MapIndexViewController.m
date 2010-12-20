@@ -12,7 +12,6 @@
 @synthesize searchResult;
 - (void)viewDidLoad {
 	[super viewDidLoad];	
-	lastResult = [NSArray array];
 	[mapView setRegion:[handHz region] animated:YES];
 	[self.searchResult loadData];
 }
@@ -21,34 +20,29 @@
 - (void)mapView:(MKMapView *)map regionDidChangeAnimated:(BOOL)animated
 {
 	self.searchResult.location = [mapView region];
-	//if ([self.searchResult isLoaded]) {		
-	lastResult = self.searchResult.results;
-		[self.searchResult loadData];
-	//}
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+	[self.searchResult loadData];
 }
 
 
 - (void)update {
-//	NSArray *oldAnnotations = mapView.annotations;
-//	[mapView removeAnnotations:oldAnnotations];
-	NSLog(@"lastResult: %d",[lastResult count]);
-	if (self.searchResult.results && [self.searchResult.results count]>0) {
+	NSArray *sitesResult = [[NSArray alloc] initWithArray:self.searchResult.results];
+	if (sitesResult && [sitesResult count]>0) {
 		[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-		for (GHSite *site in self.searchResult.results) {
+		for (GHSite *site in sitesResult) {
 			BOOL found = NO;
 			for (MKAnnotation *ann in [mapView annotations]) {
-				NSLog(@"%@,%@,%d", [ann title], site.title,([ann title]== site.title));
 				if ([[ann title] isEqualToString:site.title]) {
 					found =YES;
 				}
 			}
 			if(!found)		 
 				[mapView addAnnotation:site];
-		}
-		//GHSite *first = [self.searchResult.results objectAtIndex:0];
-		//[mapView setRegion:[handHz region:first.coordinate] animated:YES];
-		[super viewDidLoad];
+		}		
 	}
+	
+	[sitesResult release];
+	[super viewDidLoad];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation{ 
@@ -57,18 +51,12 @@
 	[mapView dequeueReusableAnnotationViewWithIdentifier:BridgeAnnotationIdentifier];
 	if (!pinView)
 	{
-		// if an existing pin view was not available, create one
 		MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
 																					 initWithAnnotation:annotation reuseIdentifier:BridgeAnnotationIdentifier] autorelease];
 		customPinView.pinColor = MKPinAnnotationColorPurple;
 		customPinView.animatesDrop = YES;
 		customPinView.canShowCallout = YES;
 		
-		// add a detail disclosure button to the callout which will open a new view controller page
-		//
-		// note: you can assign a specific call out accessory view, or as MKMapViewDelegate you can implement:
-		//  - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control;
-		//
 		UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
 		[rightButton addTarget:self
 										action:@selector(showDetails:)
@@ -87,11 +75,10 @@
 
 
 - (void)showDetails:(id)sender{
-	// the detail view does not want a toolbar so hide it
 	[self.navigationController setToolbarHidden:YES animated:NO];
 }
 - (void)dealloc {
-	[lastResult release];
+	[searchResult release];
 	[super dealloc];
 }
 
