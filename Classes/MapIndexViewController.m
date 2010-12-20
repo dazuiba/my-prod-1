@@ -11,19 +11,33 @@
 
 @synthesize searchResult;
 - (void)viewDidLoad {
+	mapView.showsUserLocation = YES;
+
 	[super viewDidLoad];	
+	
 	[mapView setRegion:[handHz region] animated:YES];
 	[self.searchResult loadData];
 }
 
+//- (void)loadView {}
 
-- (void)mapView:(MKMapView *)map regionDidChangeAnimated:(BOOL)animated
-{
+
+- (void)mapView:(MKMapView *)map regionDidChangeAnimated:(BOOL)animated{
 	self.searchResult.location = [mapView region];
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 	[self.searchResult loadData];
 }
 
+- (void)moveToCurrentLocation {
+	CLLocationCoordinate2D theLocation = [mapView.userLocation coordinate];
+	if (![handHz regionInHz:theLocation]) {
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"您不在杭州市区内" message:@"系统将使用缺省位置" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[alert show];
+		[alert release];
+		theLocation = [handHz region].center;
+	}
+	[mapView setCenterCoordinate:theLocation animated:YES];
+}
 
 - (void)update {
 	NSArray *sitesResult = [[NSArray alloc] initWithArray:self.searchResult.results];
@@ -47,29 +61,31 @@
 
 - (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation{ 
 	static NSString* BridgeAnnotationIdentifier = @"bridgeAnnotationIdentifier";
-	MKPinAnnotationView* pinView = (MKPinAnnotationView *)
-	[mapView dequeueReusableAnnotationViewWithIdentifier:BridgeAnnotationIdentifier];
-	if (!pinView)
-	{
-		MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
-																					 initWithAnnotation:annotation reuseIdentifier:BridgeAnnotationIdentifier] autorelease];
-		customPinView.pinColor = MKPinAnnotationColorPurple;
-		customPinView.animatesDrop = YES;
-		customPinView.canShowCallout = YES;
-		
-		UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-		[rightButton addTarget:self
-										action:@selector(showDetails:)
-					forControlEvents:UIControlEventTouchUpInside];
-		customPinView.rightCalloutAccessoryView = rightButton;
-		
-		return customPinView;
+	if ([annotation isKindOfClass:[GHSite class]]) {
+		MKPinAnnotationView* pinView = (MKPinAnnotationView *)
+		[mapView dequeueReusableAnnotationViewWithIdentifier:BridgeAnnotationIdentifier];
+		if (!pinView){
+			MKPinAnnotationView* customPinView = [[[MKPinAnnotationView alloc]
+																						 initWithAnnotation:annotation reuseIdentifier:BridgeAnnotationIdentifier] autorelease];
+			customPinView.pinColor = MKPinAnnotationColorPurple;
+			customPinView.animatesDrop = YES;
+			customPinView.canShowCallout = YES;
+			
+			UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+			[rightButton addTarget:self
+											action:@selector(showDetails:)
+						forControlEvents:UIControlEventTouchUpInside];
+			customPinView.rightCalloutAccessoryView = rightButton;
+			
+			return customPinView;
+		}else{
+			pinView.annotation = annotation;
+		}
+		return pinView;		
+	}else {
+		return [mapView viewForAnnotation:mapView.userLocation];
 	}
-	else
-	{
-		pinView.annotation = annotation;
-	}
-	return pinView;
+
 	
 }
 

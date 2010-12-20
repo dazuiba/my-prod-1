@@ -28,6 +28,11 @@
 	return [self region:MapInitCord];
 }
 
+
++ (BOOL)regionInHz:(CLLocationCoordinate2D) cord{	
+	return (cord.latitude <= kMapLatMax)&&(cord.latitude>=kMapLatMin) && (cord.longitude <= kMapLngMax)&&(cord.longitude>=kMapLngMin);
+}
+
 + (MKCoordinateRegion)region:(CLLocationCoordinate2D)cord{
 	MKCoordinateRegion newRegion;
 	newRegion.center = cord;

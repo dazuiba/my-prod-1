@@ -20,4 +20,5 @@
 @property (nonatomic, retain) GHSearch *searchResult;
 
 - (void)update;
+- (void)moveToCurrentLocation;
 @end

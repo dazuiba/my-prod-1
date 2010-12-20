@@ -30,7 +30,9 @@ CLLocation *coords ;
 	self.title = @"主界面";
 	coords = [[CLLocation alloc] initWithLatitude:kMapInitLat longitude: kMapInitLng];
 	NSMutableArray *toolbarItems = [[NSMutableArray alloc] initWithCapacity:3];
-	[toolbarItems addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reticle.png"]  style:UIBarButtonItemStyleDone target:self action:@selector(currentLocationButtonClicked)]];
+	[toolbarItems addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reticle.png"]  
+																													 style:UIBarButtonItemStyleDone target:self.mapIndexViewController
+																													 action:@selector(moveToCurrentLocation)]];
 	[toolbarItems addObjectsFromArray:self.toolBar.items];
 	[self addTopSearchBar];
 	

@@ -16,4 +16,5 @@
 + (ASINetworkQueue *)queue;
 + (MKCoordinateRegion)region;
 + (MKCoordinateRegion)region:(CLLocationCoordinate2D)cord;
++ (BOOL)regionInHz:(CLLocationCoordinate2D)cord;
 @end

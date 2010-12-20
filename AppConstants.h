@@ -4,6 +4,11 @@
 #define kMapInitLat  30.289874866666665
 #define kMapInitLng  120.11679036666668
 
+#define kMapLatMax 32.5609266667
+#define kMapLatMin 30.0926600000
+#define kMapLngMax 120.2846850000
+#define kMapLngMin 120.0208529026
+
 #define	kMapInitSpanDeltaLat  0.012872
 #define	kMapInitSpanDeltaLng  0.009863
 

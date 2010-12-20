@@ -31,6 +31,8 @@
 		2270941012BC906E00475720 /* MapIndexView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2270940F12BC906E00475720 /* MapIndexView.xib */; };
 		22C44E8312B9D6950095B0C0 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C44E8212B9D6950095B0C0 /* MapViewController.m */; };
 		22C44E8512B9D6A60095B0C0 /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22C44E8412B9D6A60095B0C0 /* MapView.xib */; };
+		22C88B8812BF47C300236671 /* SitePointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C88B8712BF47C300236671 /* SitePointViewController.m */; };
+		22C88B8A12BF47F600236671 /* SitePointView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22C88B8912BF47F600236671 /* SitePointView.xib */; };
 		22CE697912B7CE2400C92FC8 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CE696A12B7CE2400C92FC8 /* ASIAuthenticationDialog.m */; };
 		22CE697A12B7CE2400C92FC8 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CE696D12B7CE2400C92FC8 /* ASIDownloadCache.m */; };
 		22CE697B12B7CE2400C92FC8 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CE696F12B7CE2400C92FC8 /* ASIFormDataRequest.m */; };
@@ -93,6 +95,9 @@
 		22C44E8112B9D6950095B0C0 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		22C44E8212B9D6950095B0C0 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		22C44E8412B9D6A60095B0C0 /* MapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapView.xib; sourceTree = "<group>"; };
+		22C88B8612BF47C300236671 /* SitePointViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SitePointViewController.h; sourceTree = "<group>"; };
+		22C88B8712BF47C300236671 /* SitePointViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SitePointViewController.m; sourceTree = "<group>"; };
+		22C88B8912BF47F600236671 /* SitePointView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SitePointView.xib; sourceTree = "<group>"; };
 		22CE696912B7CE2400C92FC8 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		22CE696A12B7CE2400C92FC8 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		22CE696B12B7CE2400C92FC8 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -216,6 +221,7 @@
 				22C44E8412B9D6A60095B0C0 /* MapView.xib */,
 				2270936712BC848A00475720 /* TableView.xib */,
 				2270940F12BC906E00475720 /* MapIndexView.xib */,
+				22C88B8912BF47F600236671 /* SitePointView.xib */,
 			);
 			name = IBFiles;
 			sourceTree = "<group>";
@@ -290,6 +296,8 @@
 				2270936512BC840200475720 /* TableViewController.m */,
 				2270940C12BC903A00475720 /* MapIndexViewController.h */,
 				2270940D12BC903A00475720 /* MapIndexViewController.m */,
+				22C88B8612BF47C300236671 /* SitePointViewController.h */,
+				22C88B8712BF47C300236671 /* SitePointViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -411,6 +419,7 @@
 				2212B3C412BA301000CA6107 /* Overlay.xib in Resources */,
 				2270936812BC848A00475720 /* TableView.xib in Resources */,
 				2270941012BC906E00475720 /* MapIndexView.xib in Resources */,
+				22C88B8A12BF47F600236671 /* SitePointView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -447,6 +456,7 @@
 				2212B3C212BA2FFA00CA6107 /* OverlayController.m in Sources */,
 				2270936612BC840200475720 /* TableViewController.m in Sources */,
 				2270940E12BC903A00475720 /* MapIndexViewController.m in Sources */,
+				22C88B8812BF47C300236671 /* SitePointViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

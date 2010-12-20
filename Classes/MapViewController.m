@@ -24,8 +24,6 @@
 	return self;
 }
 
-
-
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	[mapView addAnnotation:self.site];
