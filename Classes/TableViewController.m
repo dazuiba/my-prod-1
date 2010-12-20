@@ -50,7 +50,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	
 	id object = [self.searchResult.results objectAtIndex:indexPath.row];
 	UIViewController *viewController = [(MapViewController *)[MapViewController alloc] initWithSite:(GHSite *)object];
 	
@@ -59,6 +58,7 @@
 	handhzAppDelegate *appDelegate = (handhzAppDelegate *)[[UIApplication sharedApplication] delegate];
 	[appDelegate hideMainViewNavigationBar:NO];
 	[viewController release];
-} 
+	
+}
 
 @end

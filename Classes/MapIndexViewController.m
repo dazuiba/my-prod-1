@@ -1,11 +1,3 @@
-//
-//  MapIndexViewController.m
-//  handhz
-//
-//  Created by sam on 10-12-18.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
-
 #import "MapIndexViewController.h"
 @implementation MapIndexViewController
 
@@ -18,9 +10,6 @@
 	[mapView setRegion:[handHz region] animated:YES];
 	[self.searchResult loadData];
 }
-
-//- (void)loadView {}
-
 
 - (void)mapView:(MKMapView *)map regionDidChangeAnimated:(BOOL)animated{
 	self.searchResult.location = [mapView region];
@@ -76,7 +65,6 @@
 											action:@selector(showDetails:)
 						forControlEvents:UIControlEventTouchUpInside];
 			customPinView.rightCalloutAccessoryView = rightButton;
-			
 			return customPinView;
 		}else{
 			pinView.annotation = annotation;
@@ -84,15 +72,18 @@
 		return pinView;		
 	}else {
 		return [mapView viewForAnnotation:mapView.userLocation];
-	}
+	}	
+} 
 
-	
+- (void) showDetails:(GHSite *)site{ 
+	SitePointViewController *viewController = [(SitePointViewController *)[SitePointViewController alloc] initWithSite:site];
+	NSAssert([SitesViewController sharedInstance],@"SitesViewController sharedInstance is nil");
+	[[SitesViewController sharedInstance].navigationController pushViewController:viewController animated:YES];
+	[viewController release];
 }
 
 
-- (void)showDetails:(id)sender{
-	[self.navigationController setToolbarHidden:YES animated:NO];
-}
+
 - (void)dealloc {
 	[searchResult release];
 	[super dealloc];
