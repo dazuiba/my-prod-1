@@ -24,10 +24,29 @@
 @synthesize searchResult;
 
 CLLocation *coords ;
+static SitesViewController *_sharedInstance;
+
++ (SitesViewController*) sharedInstance{
+    return _sharedInstance;
+}
+
+//- (void)viewWillAppear:(BOOL)animated{
+//	NSLog(@"1.navigationController: %@",self.navigationController);
+//	[self.navigationController setNavigationBarHidden:YES animated:NO];
+//}
+
+
+- (void) viewWillAppear:(BOOL)animated {
+	
+//	[self addTopSearchBar];
+//	handhzAppDelegate *appDelegate = (handhzAppDelegate *)[[UIApplication sharedApplication] delegate];
+//	[appDelegate hideMainViewNavigationBar:YES];
+	
+//	[super viewWillAppear:animated];
+}
 
 - (void)viewDidLoad {
-	[super viewDidLoad]; 
-	self.title = @"主界面";
+	[super viewDidLoad];
 	coords = [[CLLocation alloc] initWithLatitude:kMapInitLat longitude: kMapInitLng];
 	NSMutableArray *toolbarItems = [[NSMutableArray alloc] initWithCapacity:3];
 	[toolbarItems addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reticle.png"]  
@@ -45,9 +64,10 @@ CLLocation *coords ;
 	
 	[self.searchResult addObserver:self forKeyPath:kResourceLoadingStatusKeyPath options:NSKeyValueObservingOptionNew context:nil];
 	self.mapIndexViewController.searchResult = searchResult;
-//	[self.searchResult loadData];
+	//[self.searchResult loadData];
 	[self.view insertSubview:self.mapIndexViewController.view atIndex:0];
 	[toolbarItems release];
+	_sharedInstance=self;
 } 
 
 
@@ -103,15 +123,6 @@ CLLocation *coords ;
 	[UIView commitAnimations];
 }
 
-//
-//- (void) viewWillAppear:(BOOL)animated {
-//	
-//	[self addTopSearchBar];
-//	handhzAppDelegate *appDelegate = (handhzAppDelegate *)[[UIApplication sharedApplication] delegate];
-//	[appDelegate hideMainViewNavigationBar:YES];
-//	
-//	[super viewWillAppear:animated];
-//}
 
 - (void) addTopSearchBar{
 	searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(-5.0, 0.0, 300.0, 44.0)];

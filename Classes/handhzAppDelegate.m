@@ -12,8 +12,7 @@
 
 @implementation handhzAppDelegate
 
-@synthesize window;
-@synthesize viewController;
+@synthesize window, navigationController;
 
 
 #pragma mark -
@@ -96,7 +95,7 @@
 }
 
 - (void)dealloc {
-		[viewController release];
+		[navigationController release];
 		[window release];
     [super dealloc];
 }

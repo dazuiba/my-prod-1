@@ -43,6 +43,5 @@
 @property (nonatomic, retain, readonly) CLLocationManager *locationManager;
 
 - (IBAction)switchViews:(id)sender;
-
-
++ (SitesViewController*)sharedInstance;
 @end

@@ -33,6 +33,8 @@
 		22C44E8512B9D6A60095B0C0 /* MapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22C44E8412B9D6A60095B0C0 /* MapView.xib */; };
 		22C88B8812BF47C300236671 /* SitePointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C88B8712BF47C300236671 /* SitePointViewController.m */; };
 		22C88B8A12BF47F600236671 /* SitePointView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22C88B8912BF47F600236671 /* SitePointView.xib */; };
+		22C88EDD12BFABF500236671 /* NSString+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C88ED912BFABF500236671 /* NSString+Extensions.m */; };
+		22C88EDE12BFABF500236671 /* LabeledCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22C88EDB12BFABF500236671 /* LabeledCell.m */; };
 		22CE697912B7CE2400C92FC8 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CE696A12B7CE2400C92FC8 /* ASIAuthenticationDialog.m */; };
 		22CE697A12B7CE2400C92FC8 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CE696D12B7CE2400C92FC8 /* ASIDownloadCache.m */; };
 		22CE697B12B7CE2400C92FC8 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 22CE696F12B7CE2400C92FC8 /* ASIFormDataRequest.m */; };
@@ -98,6 +100,10 @@
 		22C88B8612BF47C300236671 /* SitePointViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SitePointViewController.h; sourceTree = "<group>"; };
 		22C88B8712BF47C300236671 /* SitePointViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SitePointViewController.m; sourceTree = "<group>"; };
 		22C88B8912BF47F600236671 /* SitePointView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SitePointView.xib; sourceTree = "<group>"; };
+		22C88ED912BFABF500236671 /* NSString+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extensions.m"; sourceTree = "<group>"; };
+		22C88EDA12BFABF500236671 /* NSString+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extensions.h"; sourceTree = "<group>"; };
+		22C88EDB12BFABF500236671 /* LabeledCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LabeledCell.m; sourceTree = "<group>"; };
+		22C88EDC12BFABF500236671 /* LabeledCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LabeledCell.h; sourceTree = "<group>"; };
 		22CE696912B7CE2400C92FC8 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		22CE696A12B7CE2400C92FC8 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		22CE696B12B7CE2400C92FC8 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -186,6 +192,8 @@
 		223D392212B8EE0F00E53545 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				22C88EDB12BFABF500236671 /* LabeledCell.m */,
+				22C88EDC12BFABF500236671 /* LabeledCell.h */,
 				223D392A12B8EE6200E53545 /* SiteCell.h */,
 				223D392B12B8EE6200E53545 /* SiteCell.m */,
 			);
@@ -226,6 +234,15 @@
 			name = IBFiles;
 			sourceTree = "<group>";
 		};
+		22C88EDF12BFAC0100236671 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				22C88ED912BFABF500236671 /* NSString+Extensions.m */,
+				22C88EDA12BFABF500236671 /* NSString+Extensions.h */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		22CE696812B7CE2400C92FC8 /* ASI */ = {
 			isa = PBXGroup;
 			children = (
@@ -261,6 +278,7 @@
 		22CE698412B7CE4000C92FC8 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				22C88EDF12BFAC0100236671 /* Extensions */,
 				2212B33912B9F5C100CA6107 /* KMLParser.h */,
 				2212B33A12B9F5C100CA6107 /* KMLParser.m */,
 				223D39AC12B8F69300E53545 /* JSON */,
@@ -457,6 +475,8 @@
 				2270936612BC840200475720 /* TableViewController.m in Sources */,
 				2270940E12BC903A00475720 /* MapIndexViewController.m in Sources */,
 				22C88B8812BF47C300236671 /* SitePointViewController.m in Sources */,
+				22C88EDD12BFABF500236671 /* NSString+Extensions.m in Sources */,
+				22C88EDE12BFABF500236671 /* LabeledCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

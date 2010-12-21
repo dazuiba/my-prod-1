@@ -11,6 +11,13 @@
 	[self.searchResult loadData];
 }
 
+
+- (void)viewWillAppear:(BOOL)animated{
+	NSLog(@"navigationController: %@",[SitesViewController sharedInstance].navigationController);
+	[[SitesViewController sharedInstance].navigationController setNavigationBarHidden:YES animated:NO];
+}
+
+
 - (void)mapView:(MKMapView *)map regionDidChangeAnimated:(BOOL)animated{
 	self.searchResult.location = [mapView region];
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -61,6 +68,7 @@
 			customPinView.canShowCallout = YES;
 			
 			UIButton* rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+			rightButton.tag = ((GHSite *)annotation).number;
 			[rightButton addTarget:self
 											action:@selector(showDetails:)
 						forControlEvents:UIControlEventTouchUpInside];
@@ -75,10 +83,14 @@
 	}	
 } 
 
-- (void) showDetails:(GHSite *)site{ 
+- (void) showDetails:(id)sender{
+	NSInteger *siteID = ((UIButton*)sender).tag;
+	GHSite *site = [searchResult findSiteByNumber:siteID];
+	NSLog(@"ss: %@",site);
+	
 	SitePointViewController *viewController = [(SitePointViewController *)[SitePointViewController alloc] initWithSite:site];
-	NSAssert([SitesViewController sharedInstance],@"SitesViewController sharedInstance is nil");
-	[[SitesViewController sharedInstance].navigationController pushViewController:viewController animated:YES];
+	
+  [[SitesViewController sharedInstance].navigationController pushViewController:viewController animated:YES];
 	[viewController release];
 }
 

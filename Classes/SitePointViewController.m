@@ -18,33 +18,26 @@
 
 - (SitePointViewController *)initWithSite:(GHSite *)theSite {
 	[super initWithNibName:@"SitePointView" bundle:nil];
-	self.site = site;
+	self.site = theSite;
 	return self;
+}
+- (IBAction)goBack{
+	[[[SitesViewController sharedInstance] navigationController] popViewControllerAnimated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-	[self.navigationController setNavigationBarHidden:NO animated:NO];
+	//[self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
 - (void)viewDidLoad {
-	[super viewDidLoad];
-	self.navigationItem.title = site.title;
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction 
-																																							target:self 
-																																							action:@selector(showActions:)];
-	
-	NSLog(@"navigationItem:%@", self.navigationController.navigationBar);
-	 //
-//
-//	self.navigationController.navigationBar.target = self;
-//	self.navigationController.navigationBar.backItem.action = @selector(goBack);
-	
+	[super viewDidLoad];	
 	[self displaySite];
-	[self.tableView reloadData];
+	[tableView reloadData];
 }
 
 - (void)displaySite {
-	[nameCell setContentText: [NSString stringWithFormat:@"#%d:%@",site.number,site.name]];
+	NSLog(@"SITE: %@",site);
+	[nameCell setContentText: [NSString stringWithFormat:@"#%@:%@",site.number,site.name]];
 	[locationCell setContentText:site.position_name];
 }
 

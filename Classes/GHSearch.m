@@ -42,6 +42,14 @@
     return [NSString stringWithFormat:@"<GHSearch searchTerm:'%@' resourceURL:'%@'>", searchTerm, self.resourceURL];
 }
   
+- (GHSite *)findSiteByNumber: (NSInteger *)number{
+	for (GHSite *site in self.results) {
+		if (site.number == number) {
+			return site;
+		}
+	}
+	NSAssert(NO,@"shoud find");
+}
 
 - (void)parsingFinished:(NSArray *)dictArray {
 	

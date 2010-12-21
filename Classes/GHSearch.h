@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "GHResource.h"
-
+#import "GHSite.h"
 
 @interface GHSearch : GHResource {
 	NSMutableArray *results;
@@ -16,7 +16,7 @@
 
 + (id)searchWithURLFormat:(NSString *)theFormat;
 - (id)initWithURLFormat:(NSString *)theFormat;
-
+- (GHSite *)findSiteByNumber:(NSInteger *)number;
 @end
 
 
