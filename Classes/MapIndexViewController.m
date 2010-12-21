@@ -84,12 +84,10 @@
 } 
 
 - (void) showDetails:(id)sender{
-	NSInteger *siteID = ((UIButton*)sender).tag;
-	GHSite *site = [searchResult findSiteByNumber:siteID];
-	NSLog(@"ss: %@",site);
-	
+	NSInteger *siteID = (NSInteger *)((UIButton*)sender).tag;
+	GHSite *site = [searchResult findSiteByNumber:siteID];	
 	SitePointViewController *viewController = [(SitePointViewController *)[SitePointViewController alloc] initWithSite:site];
-	
+	[SitesViewController sharedInstance].navigationController.navigationItem.title = site.title;
   [[SitesViewController sharedInstance].navigationController pushViewController:viewController animated:YES];
 	[viewController release];
 }

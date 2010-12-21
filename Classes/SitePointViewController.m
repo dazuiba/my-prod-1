@@ -35,10 +35,16 @@
 	[tableView reloadData];
 }
 
-- (void)displaySite {
-	NSLog(@"SITE: %@",site);
+- (void)displaySite { 
 	[nameCell setContentText: [NSString stringWithFormat:@"#%@:%@",site.number,site.name]];
 	[locationCell setContentText:site.position_name];
+	if(site.plot_count){
+		GHPlotCount *c = site.plot_count;
+		[countCell setContentText:[NSString stringWithFormat:@"%d/%d,%@前更新",c.used_count+c.empty_count, c.empty_count,c.created_at]];
+	}
+	[serviceTimeCell setContentText:[site valueInDict:@"serviceTime"]];
+	
+	[servicePhoneCell setContentText:[site valueInDict:@"phone"]];
 }
 
 #pragma mark TableView

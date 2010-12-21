@@ -45,20 +45,17 @@
 	}
 	
 	cell.textLabel.text = [NSString stringWithFormat:@"#%@ %@", site.number, site.name];
+
 	cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", site.position_name];
 	return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-	id object = [self.searchResult.results objectAtIndex:indexPath.row];
-	UIViewController *viewController = [(MapViewController *)[MapViewController alloc] initWithSite:(GHSite *)object];
-	
-	viewController.hidesBottomBarWhenPushed = YES;
-	[[self navigationController] pushViewController:viewController animated:YES];	
-	handhzAppDelegate *appDelegate = (handhzAppDelegate *)[[UIApplication sharedApplication] delegate];
-	[appDelegate hideMainViewNavigationBar:NO];
-	[viewController release];
-	
+	GHSite *site = [self.searchResult.results objectAtIndex:indexPath.row];
+	SitePointViewController *viewController = [(SitePointViewController *)[SitePointViewController alloc] initWithSite:site];
+	[SitesViewController sharedInstance].navigationItem.title = site.title;
+	[[SitesViewController sharedInstance].navigationController pushViewController:viewController animated:YES];
+	[viewController release];	
 }
 
 @end

@@ -7,19 +7,21 @@
 //
 
 #import "GHSite.h"
-//@interface GHSite() 
-//
-//@end
-
 @implementation GHSite
 
-@synthesize dict, name, position_name, number;
+@synthesize dict, name, position_name, number,plot_count;
 
 
 - (id)initWithDictionary:(NSDictionary *)theDict{
 	[super init];
 	[theDict retain];
 	self.dict = theDict;
+	
+	NSDictionary *countDict = [self valueInDict:@"count"];
+	if (countDict) { 
+		plot_count =  [[GHPlotCount alloc] initWithDictionary: countDict];		
+		[countDict release];
+	}
 	return self;
 }
 
@@ -31,8 +33,7 @@
 - (NSInteger *)number { 
 	return (NSInteger *)[self valueInDict:@"uid"];
 }
-
-
+ 
 - (NSString *)name {
 	return [self valueInDict:@"name"];
 }
@@ -88,6 +89,7 @@
 }
 
 - (void)dealloc {
+	[plot_count release];
 	[dict release];
 	[super dealloc];
 }

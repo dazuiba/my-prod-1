@@ -167,7 +167,7 @@
 					<object class="IBUITableView" id="169283740">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{0, 44}, {320, 372}}</string>
+						<string key="NSFrame">{{0, 29}, {320, 390}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="IBUIBackgroundColor" ref="241568503"/>
 						<bool key="IBUIClipsSubviews">YES</bool>

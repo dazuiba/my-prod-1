@@ -19,8 +19,8 @@
 @interface MapIndexViewController : UIViewController <MKMapViewDelegate> {
 	
 	IBOutlet MKMapView *mapView;
-	GHSearch *searchResult;
-	
+	GHSearch *searchResult;	
+	GHSite *currentSite;	
 }
 
 @property (nonatomic, retain) GHSearch *searchResult;

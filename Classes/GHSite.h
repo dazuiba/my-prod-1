@@ -8,9 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
+#import "GHPlotCount.h"
 
 @interface GHSite : NSObject <MKAnnotation> {
 	NSDictionary *dict;
+	GHPlotCount *plot_count;
+
 }
 
 @property(nonatomic,retain)NSDictionary *dict;
@@ -20,7 +23,7 @@
 @property(nonatomic,retain)NSString *position_name;
 @property(nonatomic,readonly)double lat;
 @property(nonatomic,readonly)double lng;
-
+@property(nonatomic,readonly)GHPlotCount *plot_count;
 + (id)initWithDictionary:(NSDictionary *)dict;
 - (BOOL)haveLocation;
 

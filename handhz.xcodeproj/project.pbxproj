@@ -11,6 +11,7 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		2208DF7F12C09DCD0000D31C /* GHPlotCount.m in Sources */ = {isa = PBXBuildFile; fileRef = 2208DF7E12C09DCD0000D31C /* GHPlotCount.m */; };
 		2212B33B12B9F5C100CA6107 /* KMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2212B33A12B9F5C100CA6107 /* KMLParser.m */; };
 		2212B36012B9FA5E00CA6107 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2212B35F12B9FA5E00CA6107 /* MapKit.framework */; };
 		2212B3C212BA2FFA00CA6107 /* OverlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2212B3C112BA2FFA00CA6107 /* OverlayController.m */; };
@@ -63,6 +64,8 @@
 		1D3623250D0F684500981E51 /* handhzAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = handhzAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* handhz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = handhz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2208DF7D12C09DCD0000D31C /* GHPlotCount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHPlotCount.h; sourceTree = "<group>"; };
+		2208DF7E12C09DCD0000D31C /* GHPlotCount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHPlotCount.m; sourceTree = "<group>"; };
 		2212B33912B9F5C100CA6107 /* KMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMLParser.h; sourceTree = "<group>"; };
 		2212B33A12B9F5C100CA6107 /* KMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KMLParser.m; sourceTree = "<group>"; };
 		2212B35F12B9FA5E00CA6107 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -297,6 +300,8 @@
 				22CE699312B7CEB300C92FC8 /* GHSearch.m */,
 				223D38F712B8D69100E53545 /* GHSite.h */,
 				223D38F812B8D69100E53545 /* GHSite.m */,
+				2208DF7D12C09DCD0000D31C /* GHPlotCount.h */,
+				2208DF7E12C09DCD0000D31C /* GHPlotCount.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -477,6 +482,7 @@
 				22C88B8812BF47C300236671 /* SitePointViewController.m in Sources */,
 				22C88EDD12BFABF500236671 /* NSString+Extensions.m in Sources */,
 				22C88EDE12BFABF500236671 /* LabeledCell.m in Sources */,
+				2208DF7F12C09DCD0000D31C /* GHPlotCount.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

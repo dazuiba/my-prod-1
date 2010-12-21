@@ -26,6 +26,7 @@
 	if (location.center.latitude) {
 		ll = [NSString stringWithFormat:@"%f,%f&span=%f,%f",location.center.latitude,location.center.longitude,location.span.latitudeDelta,location.span.longitudeDelta];
 	}
+	
 	NSString *urlString = [NSString stringWithFormat:urlFormat, key,ll];
 	NSURL *url = [NSURL URLWithString:urlString];
 	return url;
@@ -43,12 +44,13 @@
 }
   
 - (GHSite *)findSiteByNumber: (NSInteger *)number{
-	for (GHSite *site in self.results) {
-		if (site.number == number) {
+	for (GHSite *site in self.results) { 
+		if([number intValue]==[site.number intValue]) {
 			return site;
 		}
 	}
-	NSAssert(NO,@"shoud find");
+	return nil;
+	//NSAssert(NO,[NSString stringWithFormat:@"shoud find:%@ in (%@)" , number, self.results]);
 }
 
 - (void)parsingFinished:(NSArray *)dictArray {
@@ -62,7 +64,7 @@
 		
 		self.results = [[NSMutableArray alloc] initWithCapacity:dictArray.count];
 		for (NSDictionary *dict in dictArray){ 
-			GHSite *site = [[GHSite alloc] initWithDictionary:[dict objectForKey:@"byc_site"]];
+			GHSite *site = [[GHSite alloc] initWithDictionary:dict];
 			[self.results addObject:site];
 			[site release];
 		}
