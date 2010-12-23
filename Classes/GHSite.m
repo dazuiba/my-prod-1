@@ -71,8 +71,6 @@
 - (NSString *)subtitle{
 	return self.position_name;
 }
-
-
 	 
 - (id)valueInDict:(NSString *)key {
 	return [self.dict valueForKey:key];

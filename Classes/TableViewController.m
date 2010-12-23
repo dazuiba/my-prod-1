@@ -11,10 +11,11 @@
 
 @implementation TableViewController
 
-@synthesize searchResult, tableView;
+@synthesize searchResult, tableView,tmpCell;
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+	self.tableView.rowHeight = 73.0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -37,16 +38,15 @@
 	GHSite *site = [self.searchResult.results objectAtIndex:indexPath.row];
 	
 	static NSString *kCellIdentifier = @"SiteCellID";
-	UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
+	SiteTableCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCellIdentifier];
 	if (cell == nil) {
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier] autorelease];
-		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-		cell.textLabel.font = [UIFont boldSystemFontOfSize:14];
+		[[NSBundle mainBundle] loadNibNamed:@"SiteTableCell" owner:self options:nil];
+		cell = tmpCell;
+		self.tmpCell = nil;	
 	}
 	
-	cell.textLabel.text = [NSString stringWithFormat:@"#%@ %@", site.number, site.name];
-
-	cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", site.position_name];
+	cell.site = site;
+	
 	return cell;
 }
 

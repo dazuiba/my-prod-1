@@ -50,7 +50,7 @@
 #pragma mark TableView
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	return 1;
+	return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -64,7 +64,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSInteger section = indexPath.section;
 	NSInteger row = indexPath.row;
-	if (section == 0) {
+	if (true||section == 0) {
 		LabeledCell *cell;
 		switch (row) {
 			case 0: cell = nameCell; break;

@@ -78,7 +78,7 @@ static SitesViewController *_sharedInstance;
 	if ([keyPath isEqualToString:kResourceLoadingStatusKeyPath]) {	
 		GHSearch *search = (GHSearch *)object;
 		if (!search.isLoading && search.error) {
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Loading error" message:@"Could not load the search results" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"服务器故障" message:@"服务器链接失败，请稍候重试" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
 			[alert show];
 			[alert release];
 		}else {
@@ -132,7 +132,7 @@ static SitesViewController *_sharedInstance;
 	searchBar.delegate = self;
 	[searchBarView addSubview:searchBar];
 	self.navigationItem.titleView = searchBarView;
-	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(se:)] autorelease];
+	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(se:)] autorelease];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -141,7 +141,9 @@ static SitesViewController *_sharedInstance;
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)theSearchBar {
 	NSLog(@"Search: %@", searchBar.text);
-	self.searchResult.searchTerm = searchBar.text;
+	if(searchBar.text){
+		self.searchResult.searchTerm = searchBar.text;
+	}
 	[self.searchResult loadData];
 	[self quitSearching:nil];
 }
@@ -152,13 +154,13 @@ static SitesViewController *_sharedInstance;
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)theSearchBar {
 	[self.view insertSubview:overlayController.view aboveSubview:self.parentViewController.view];
-	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(quitSearching:)] autorelease];
+	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(quitSearching:)] autorelease];
 }
 
 - (void)quitSearching:(id)sender {
 	searchBar.text = self.searchResult.searchTerm;
 	[searchBar resignFirstResponder];
-	self.navigationItem.rightBarButtonItem = nil;
+	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(se:)] autorelease];
 	[overlayController.view removeFromSuperview];
 }
 
